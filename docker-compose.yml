@@ -1,0 +1,12 @@
+services:
+  calculator:
+    build: .
+    container_name: cloud_calculator_app
+    restart: always
+    ports:
+      - "80:80"
+    healthcheck:
+      test: ["CMD-SHELL", "wget -q --spider http://localhost/ || exit 1"]
+      interval: 30s
+      timeout: 3s
+      retries: 3

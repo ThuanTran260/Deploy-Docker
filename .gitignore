@@ -1,0 +1,15 @@
+# Dependencies & System
+.DS_Store
+Thumbs.db
+node_modules/
+
+# Security & Secrets (Cực kỳ quan trọng)
+*.pem
+*.key
+*.env
+.env.*
+
+# Editor & Tooling
+.vscode/
+.idea/
+.agents/

@@ -1,0 +1,72 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Cloud Calculator - Docker on AWS EC2</title>
+  <link rel="stylesheet" href="style.css">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;600;700&family=Plus+Jakarta+Sans:wght@400;500;600;700&display=swap" rel="stylesheet">
+</head>
+<body>
+  <div class="background-decor">
+    <div class="circle circle-1"></div>
+    <div class="circle circle-2"></div>
+  </div>
+
+  <div class="container">
+    <header class="app-header">
+      <div class="badge">
+        <span class="pulse-dot"></span>
+        AWS EC2 & Docker Running
+      </div>
+      <h1>Cloud Calculator</h1>
+      <p class="subtitle">Triển khai bằng Docker Container trên Nginx Alpine</p>
+    </header>
+
+    <main class="calculator-card">
+      <div class="display-container">
+        <div class="history" id="calcHistory"></div>
+        <div class="current-operand" id="calcDisplay">0</div>
+      </div>
+
+      <div class="keypad">
+        <button class="key func" data-action="clear" title="Clear All (Escape)">AC</button>
+        <button class="key func" data-action="delete" title="Delete Last (Backspace)">⌫</button>
+        <button class="key func" data-action="percent" title="Percentage (%)">%</button>
+        <button class="key operator" data-operator="÷" title="Divide (/)">÷</button>
+
+        <button class="key number" data-number="7">7</button>
+        <button class="key number" data-number="8">8</button>
+        <button class="key number" data-number="9">9</button>
+        <button class="key operator" data-operator="×" title="Multiply (*)">×</button>
+
+        <button class="key number" data-number="4">4</button>
+        <button class="key number" data-number="5">5</button>
+        <button class="key number" data-number="6">6</button>
+        <button class="key operator" data-operator="-" title="Minus (-)">−</button>
+
+        <button class="key number" data-number="1">1</button>
+        <button class="key number" data-number="2">2</button>
+        <button class="key number" data-number="3">3</button>
+        <button class="key operator" data-operator="+" title="Plus (+)">+</button>
+
+        <button class="key number zero" data-number="0">0</button>
+        <button class="key number" data-number=".">.</button>
+        <button class="key equals" data-action="calculate" title="Calculate (Enter)">=</button>
+      </div>
+    </main>
+
+    <footer class="app-footer">
+      <div class="sys-info">
+        <span>Image: <strong>nginx:alpine</strong> (~23MB)</span>
+        <span>•</span>
+        <span>Status: <strong class="online-tag">Online</strong></span>
+      </div>
+    </footer>
+  </div>
+
+  <script src="script.js"></script>
+</body>
+</html>

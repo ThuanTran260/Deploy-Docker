@@ -1,0 +1,263 @@
+:root {
+  --bg-color: #0c0f17;
+  --card-bg: rgba(23, 28, 42, 0.75);
+  --card-border: rgba(255, 255, 255, 0.08);
+  --display-bg: rgba(12, 16, 26, 0.85);
+  --text-main: #f8fafc;
+  --text-dim: #94a3b8;
+  
+  --key-num-bg: #1e2638;
+  --key-num-hover: #29344d;
+  --key-func-bg: #2d3748;
+  --key-func-hover: #3a475d;
+  --key-op-bg: #3b82f6;
+  --key-op-hover: #2563eb;
+  --key-equal-bg: #10b981;
+  --key-equal-hover: #059669;
+
+  --accent-glow: rgba(59, 130, 246, 0.25);
+  --border-radius: 20px;
+}
+
+* {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+  -webkit-tap-highlight-color: transparent;
+}
+
+body {
+  min-height: 100vh;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background-color: var(--bg-color);
+  font-family: 'Plus Jakarta Sans', sans-serif;
+  color: var(--text-main);
+  position: relative;
+  overflow-x: hidden;
+  padding: 20px;
+}
+
+/* Background Glowing Circles */
+.background-decor {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100vw;
+  height: 100vh;
+  pointer-events: none;
+  z-index: 0;
+  overflow: hidden;
+}
+
+.circle {
+  position: absolute;
+  border-radius: 50%;
+  filter: blur(120px);
+  opacity: 0.35;
+}
+
+.circle-1 {
+  width: 350px;
+  height: 350px;
+  background: #3b82f6;
+  top: -10%;
+  left: -5%;
+}
+
+.circle-2 {
+  width: 400px;
+  height: 400px;
+  background: #10b981;
+  bottom: -10%;
+  right: -5%;
+}
+
+/* App Container */
+.container {
+  width: 100%;
+  max-width: 400px;
+  position: relative;
+  z-index: 1;
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+}
+
+/* Header */
+.app-header {
+  text-align: center;
+}
+
+.badge {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  padding: 6px 14px;
+  border-radius: 999px;
+  background: rgba(16, 185, 129, 0.12);
+  border: 1px solid rgba(16, 185, 129, 0.3);
+  color: #34d399;
+  font-size: 0.75rem;
+  font-weight: 600;
+  letter-spacing: 0.03em;
+  margin-bottom: 12px;
+}
+
+.pulse-dot {
+  width: 8px;
+  height: 8px;
+  background-color: #10b981;
+  border-radius: 50%;
+  box-shadow: 0 0 10px #10b981;
+  animation: pulse 2s infinite;
+}
+
+@keyframes pulse {
+  0% { transform: scale(0.95); box-shadow: 0 0 0 0 rgba(16, 185, 129, 0.7); }
+  70% { transform: scale(1); box-shadow: 0 0 0 8px rgba(16, 185, 129, 0); }
+  100% { transform: scale(0.95); box-shadow: 0 0 0 0 rgba(16, 185, 129, 0); }
+}
+
+.app-header h1 {
+  font-size: 1.6rem;
+  font-weight: 700;
+  letter-spacing: -0.02em;
+}
+
+.subtitle {
+  font-size: 0.85rem;
+  color: var(--text-dim);
+  margin-top: 4px;
+}
+
+/* Calculator Card */
+.calculator-card {
+  background: var(--card-bg);
+  backdrop-filter: blur(16px);
+  -webkit-backdrop-filter: blur(16px);
+  border: 1px solid var(--card-border);
+  border-radius: var(--border-radius);
+  padding: 22px;
+  box-shadow: 0 20px 40px -15px rgba(0, 0, 0, 0.6);
+}
+
+/* Display */
+.display-container {
+  background: var(--display-bg);
+  border: 1px solid rgba(255, 255, 255, 0.05);
+  border-radius: 14px;
+  padding: 16px 20px;
+  margin-bottom: 20px;
+  text-align: right;
+  min-height: 90px;
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-end;
+  word-break: break-all;
+  box-shadow: inset 0 2px 6px rgba(0, 0, 0, 0.4);
+}
+
+.history {
+  font-family: 'JetBrains Mono', monospace;
+  font-size: 0.9rem;
+  color: var(--text-dim);
+  min-height: 1.2rem;
+  margin-bottom: 4px;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.current-operand {
+  font-family: 'JetBrains Mono', monospace;
+  font-size: 2.2rem;
+  font-weight: 700;
+  color: var(--text-main);
+  line-height: 1.1;
+  transition: all 0.15s ease;
+}
+
+/* Keypad Grid */
+.keypad {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 12px;
+}
+
+.key {
+  height: 56px;
+  border-radius: 12px;
+  border: none;
+  font-size: 1.15rem;
+  font-weight: 600;
+  color: var(--text-main);
+  cursor: pointer;
+  outline: none;
+  transition: all 0.12s ease;
+  user-select: none;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.key:active {
+  transform: scale(0.94);
+}
+
+/* Button Variants */
+.key.number {
+  background: var(--key-num-bg);
+}
+.key.number:hover {
+  background: var(--key-num-hover);
+}
+
+.key.zero {
+  grid-column: span 2;
+}
+
+.key.func {
+  background: var(--key-func-bg);
+  color: #cbd5e1;
+}
+.key.func:hover {
+  background: var(--key-func-hover);
+}
+
+.key.operator {
+  background: var(--key-op-bg);
+  color: #ffffff;
+  font-size: 1.3rem;
+}
+.key.operator:hover {
+  background: var(--key-op-hover);
+}
+
+.key.equals {
+  background: var(--key-equal-bg);
+  color: #ffffff;
+  font-size: 1.3rem;
+}
+.key.equals:hover {
+  background: var(--key-equal-hover);
+}
+
+/* Footer Info */
+.app-footer {
+  text-align: center;
+  font-size: 0.78rem;
+  color: var(--text-dim);
+}
+
+.sys-info {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  gap: 8px;
+}
+
+.online-tag {
+  color: #34d399;
+}
