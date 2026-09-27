@@ -4,4 +4,9 @@
 .agents
 *.md
 *.pem
+*.ppk
 *.key
+*.env
+.env.*
+.aws
+*credentials*

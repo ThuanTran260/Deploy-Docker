@@ -3,11 +3,41 @@
 Thumbs.db
 node_modules/
 
-# Security & Secrets (Cực kỳ quan trọng)
+# Security & AWS Secrets (Cực kỳ quan trọng)
+# 1. Private Keys, Certificates & SSH
 *.pem
+*.ppk
 *.key
+*.pkcs12
+*.pfx
+*.p12
+*.cer
+*.crt
+*.der
+id_rsa
+id_rsa*
+id_ed25519
+id_ed25519*
+
+# 2. AWS Credentials & CLI Configurations
+.aws/
+*credentials*
+*aws_access_key*
+*aws_secret*
+aws-config*
+
+# 3. Environment Variables & App Secrets
 *.env
 .env.*
+*.env.local
+*.env.*.local
+
+# 4. AWS Cloud & Infrastructure State (Terraform, SAM, CDK, Serverless)
+*.tfstate
+*.tfstate.*
+.aws-sam/
+.serverless/
+cdk.out/
 
 # Editor & Tooling
 .vscode/
