@@ -1,0 +1,26 @@
+{
+  "name": "brewlite-e2e-tests",
+  "version": "1.0.0",
+  "description": "Opaque-Box E2E Test Suite for CNPM-BrewLite Cloud Deployment",
+  "private": true,
+  "scripts": {
+    "test": "node tests/e2e/runner.js",
+    "test:mock": "node tests/e2e/runner.js --mock",
+    "test:ec2": "node tests/e2e/runner.js --base-url http://13.212.123.26",
+    "test:local": "node tests/e2e/runner.js --base-url http://localhost:80",
+    "test:tier0": "node tests/e2e/runner.js --tier 0",
+    "test:tier1": "node tests/e2e/runner.js --tier 1",
+    "test:tier2": "node tests/e2e/runner.js --tier 2",
+    "test:tier3": "node tests/e2e/runner.js --tier 3",
+    "test:tier4": "node tests/e2e/runner.js --tier 4"
+  },
+  "keywords": [
+    "e2e",
+    "opaque-box",
+    "testing",
+    "brewlite",
+    "docker"
+  ],
+  "author": "teamwork_preview_test_writer",
+  "license": "ISC"
+}
