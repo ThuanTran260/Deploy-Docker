@@ -78,8 +78,19 @@ Hệ thống được đóng gói thành 4 container độc lập liên kết qu
 
 ## 💻 4. Hướng Dẫn Khởi Chạy Local (Docker Desktop)
 
-Nếu muốn chạy thử nghiệm trên máy tính cá nhân đã cài Docker:
+### Cách 1: Khởi chạy siêu tốc từ Docker Hub (Khuyên dùng - Không cần build, không cần source code)
+Chỉ cần có Docker, tải file `docker-compose.hub.yml` về và chạy:
 
+```bash
+docker compose -f docker-compose.hub.yml up -d
+```
+> Bộ image đã được build sẵn và lưu trữ tại Docker Hub:
+> - `monitori/brewlite-nginx:latest`
+> - `monitori/brewlite-frontend:latest`
+> - `monitori/brewlite-backend:latest`
+> - `postgres:16-alpine`
+
+### Cách 2: Tự build từ mã nguồn (Dành cho Developer)
 ```bash
 # 1. Clone repository
 git clone https://github.com/ThuanTran260/Deploy-Docker.git
@@ -91,7 +102,7 @@ docker compose up -d --build
 # 3. Kiểm tra trạng thái các container
 docker compose ps
 ```
-👉 Truy cập: `http://localhost/`
+👉 Truy cập ngay: `http://localhost/`
 
 ---
 

@@ -1,0 +1,91 @@
+services:
+  postgres:
+    image: postgres:16-alpine
+    container_name: brewlite_postgres
+    restart: unless-stopped
+    environment:
+      POSTGRES_USER: postgres
+      POSTGRES_PASSWORD: postgres
+      POSTGRES_DB: brewlite
+    volumes:
+      - pgdata:/var/lib/postgresql/data
+    networks:
+      - brewlite-network
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U postgres -d brewlite"]
+      interval: 5s
+      timeout: 5s
+      retries: 5
+      start_period: 10s
+
+  backend:
+    image: monitori/brewlite-backend:latest
+    container_name: brewlite_backend
+    restart: unless-stopped
+    environment:
+      PORT: 3001
+      NODE_ENV: production
+      DATABASE_URL: "postgresql://postgres:postgres@postgres:5432/brewlite?schema=public"
+      JWT_SECRET: "brewlite_jwt_super_secret_key_2026"
+      JWT_EXPIRES_IN: "7d"
+      FRONTEND_URL: "http://localhost:3000"
+      SEED: "true"
+    networks:
+      - brewlite-network
+    depends_on:
+      postgres:
+        condition: service_healthy
+    healthcheck:
+      test: ["CMD-SHELL", "wget -qO- http://127.0.0.1:3001/api/health || exit 1"]
+      interval: 10s
+      timeout: 5s
+      retries: 5
+      start_period: 20s
+
+  frontend:
+    image: monitori/brewlite-frontend:latest
+    container_name: brewlite_frontend
+    restart: unless-stopped
+    environment:
+      PORT: 3000
+      NODE_ENV: production
+      NEXT_PUBLIC_API_URL: "/api"
+    networks:
+      - brewlite-network
+    depends_on:
+      backend:
+        condition: service_healthy
+    healthcheck:
+      test: ["CMD-SHELL", "wget -qO- http://127.0.0.1:3000/ || exit 1"]
+      interval: 10s
+      timeout: 5s
+      retries: 3
+      start_period: 15s
+
+  nginx:
+    image: monitori/brewlite-nginx:latest
+    container_name: brewlite_nginx
+    restart: unless-stopped
+    ports:
+      - "80:80"
+    networks:
+      - brewlite-network
+    depends_on:
+      backend:
+        condition: service_healthy
+      frontend:
+        condition: service_healthy
+    healthcheck:
+      test: ["CMD-SHELL", "wget -qO- http://127.0.0.1:80/ || exit 1"]
+      interval: 10s
+      timeout: 5s
+      retries: 3
+      start_period: 5s
+
+volumes:
+  pgdata:
+    driver: local
+
+networks:
+  brewlite-network:
+    driver: bridge
