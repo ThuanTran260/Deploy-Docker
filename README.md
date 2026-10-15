@@ -4,35 +4,36 @@ Dự án fullstack **BrewLite (Cashless Coffee Ordering System)** hiện đại,
 
 ---
 
-## 🔐 1. Tài Khoản & Mật Khẩu Demo (Demo Credentials)
+## 👥 1. Các Phân Quyền Người Dùng (Role-Based Access Control)
 
-Hệ thống đã nạp sẵn (seed) đầy đủ 3 tài khoản mẫu đại diện cho 3 phân quyền chính cùng các mã voucher khuyến mãi:
+Hệ thống hỗ trợ 3 phân quyền người dùng độc lập theo mô hình RBAC:
 
-| Vai trò (Role) | Email đăng nhập | Mật khẩu | Phạm vi truy cập & Tính năng |
-|:---|:---|:---|:---|
-| 👑 **Quản trị viên (ADMIN)** | `admin@brewlite.vn` | `Admin123!` | Truy cập `/admin`: Quản lý thực đơn, điều chỉnh tồn kho tức thì, quản lý phân quyền nhân sự Barista/Staff. |
-| ☕ **Nhân viên (STAFF)** | `staff@brewlite.vn` | `Staff123!` | Truy cập `/staff`: Màn hình Barista KDS dạng Kanban 3 cột — nhận đơn, chuyển trạng thái pha chế, hoàn tất đơn. |
-| 👤 **Khách hàng (CUSTOMER)** | `customer@brewlite.vn` | `Customer123!` | Truy cập `/`: Chọn món, tùy biến size/topping, nhập voucher, thanh toán không tiền mặt, theo dõi đơn hàng và tích điểm thành viên (sẵn 50 điểm). |
+| Vai trò (Role) | Email tài khoản mẫu | Phạm vi quyền hạn & Chức năng |
+|:---|:---|:---|
+| 👑 **Quản trị viên (ADMIN)** | `admin@brewlite.vn` | Truy cập `/admin`: Quản lý thực đơn, cập nhật tồn kho tức thì, quản lý và điều chỉnh phân quyền nhân sự Barista/Staff. |
+| ☕ **Nhân viên (STAFF)** | `staff@brewlite.vn` | Truy cập `/staff`: Màn hình Barista KDS dạng Kanban 3 cột — tiếp nhận đơn mới, chuyển trạng thái pha chế, hoàn tất đơn hàng. |
+| 👤 **Khách hàng (CUSTOMER)** | `customer@brewlite.vn` | Truy cập `/`: Xem thực đơn, tùy biến size/topping, áp dụng voucher, thanh toán không tiền mặt, theo dõi đơn hàng và tích lũy điểm thưởng. |
 
-### 🎟️ Mã Khuyến Mãi Có Sẵn (Vouchers):
+> [!NOTE]  
+> **Chính sách bảo mật (Security Policy):** Mật khẩu tài khoản mẫu và các tham số xác thực được lưu trữ an toàn trong biến môi trường (`.env`), không công khai trên mã nguồn mở. Khi cần thông tin kiểm thử nội bộ, vui lòng liên hệ quản trị viên dự án.
+
+### 🎟️ Mã Khuyến Mãi Hỗ Trợ (Vouchers):
 * **`WELCOME10`**: Giảm 10% cho đơn hàng có giá trị từ 50.000đ trở lên.
 * **`FIXED20K`**: Giảm trực tiếp 20.000đ cho đơn hàng có giá trị từ 100.000đ trở lên.
 
 ---
 
-## 🌐 2. Địa Chỉ Truy Cập Dịch Vụ (Live Endpoints)
+## 🌐 2. Địa Chỉ Truy Cập Dịch Vụ (Endpoints)
 
-Khi hệ thống đang chạy trên máy chủ AWS EC2 (hoặc máy local):
+Khi hệ thống đang vận hành trên máy chủ AWS EC2 (hoặc máy tính cục bộ):
 
-* 🏠 **Trang chủ & Thực đơn:** `http://<Public_IPv4_EC2>/`
+* 🏠 **Trang chủ & Thực đơn:** `http://<Public_IPv4_EC2>/` (hoặc `http://localhost/`)
 * 🔑 **Trang Đăng nhập:** `http://<Public_IPv4_EC2>/login`
 * ☕ **Bảng điều khiển Barista KDS:** `http://<Public_IPv4_EC2>/staff`
 * ⚙️ **Cổng Quản trị Admin:** `http://<Public_IPv4_EC2>/admin`
 * 📜 **Lịch sử đơn hàng Khách hàng:** `http://<Public_IPv4_EC2>/orders/history`
 * 🩺 **Kiểm tra trạng thái Backend API:** `http://<Public_IPv4_EC2>/api/health`
 * 📦 **Danh mục sản phẩm qua API:** `http://<Public_IPv4_EC2>/api/products`
-
-*(Ví dụ địa chỉ IP máy chủ hiện tại: `http://13.212.123.26/`)*
 
 ---
 
@@ -70,7 +71,7 @@ Hệ thống được đóng gói thành 4 container độc lập liên kết qu
    - Điều hướng toàn bộ request `/api/` vào container Backend.
    - Ngăn chặn hoàn toàn việc phơi lộ các cổng nội bộ (3000, 3001, 5432) ra internet.
 2. **`brewlite_frontend` (Next.js 14 Standalone):** Giao diện bán hàng phản hồi tức thì, tối ưu SEO, hỗ trợ Responsive và chuẩn trợ năng Accessibility (WCAG 2.1 AA / web.dev).
-3. **`brewlite_backend` (NestJS 10 + Prisma):** Kiến trúc Module hướng dịch vụ, xử lý giao dịch thanh toán Idempotent an toàn, State Machine đơn hàng và tự động seed dữ liệu mẫu khi khởi động.
+3. **`brewlite_backend` (NestJS 10 + Prisma):** Kiến trúc Module hướng dịch vụ, xử lý giao dịch thanh toán Idempotent an toàn, State Machine đơn hàng và nạp dữ liệu mẫu tự động.
 4. **`brewlite_postgres` (PostgreSQL 16 Alpine):** Cơ sở dữ liệu quan hệ lưu trữ dữ liệu bền vững qua Docker Volume `pgdata`.
 
 ---
@@ -99,17 +100,17 @@ docker compose ps
 ### Bước 1: Chuẩn bị SSH Key
 * **Windows (PowerShell):**
   ```powershell
-  icacls "calculator-key.pem" /inheritance:r
-  icacls "calculator-key.pem" /grant:r "$($env:USERNAME):(R)"
+  icacls "<your-key-pair>.pem" /inheritance:r
+  icacls "<your-key-pair>.pem" /grant:r "$($env:USERNAME):(R)"
   ```
 * **macOS / Linux / Git Bash:**
   ```bash
-  chmod 400 calculator-key.pem
+  chmod 400 <your-key-pair>.pem
   ```
 
 ### Bước 2: Kết nối SSH vào máy ảo EC2
 ```bash
-ssh -i "calculator-key.pem" ubuntu@<Public_IPv4_Cua_EC2>
+ssh -i "<your-key-pair>.pem" ubuntu@<Public_IPv4_Cua_EC2>
 ```
 
 ### Bước 3: Kích hoạt Swap 1GB (Chống tràn RAM trên t2.micro / t3.micro)
@@ -160,10 +161,11 @@ docker compose down
 
 ---
 
-## 🛡️ 7. Rào Chắn An Toàn Chi Phí AWS Free Tier (0 VNĐ)
+## 🛡️ 7. Rào Chắn An Toàn Chi Phí & Bảo Mật (Zero-Cost & DevSecOps)
 
-1. **AWS Budgets:** Luôn đặt ngân sách cảnh báo **$1.00 USD** gửi thông báo về email cá nhân ngay khi phát sinh bất kỳ khoản phí nhỏ nào.
-2. **Không tạo Elastic IP (EIP) mồ côi:** Chỉ sử dụng Public IPv4 tự động gán đi kèm instance.
-3. **Không tạo dịch vụ trả phí cố định:** Tuyệt đối không tạo NAT Gateway (~$35/tháng) hay Application Load Balancer (~$25/tháng).
-4. **Hủy tài nguyên khi hoàn thành môn học/đồ án:**
+1. **Bảo mật thông tin xác thực:** Tuyệt đối không commit file khóa riêng tư `*.pem`, `*.key` hoặc file biến môi trường chứa `JWT_SECRET`, mật khẩu cơ sở dữ liệu lên kho mã nguồn công khai.
+2. **AWS Budgets:** Luôn đặt ngân sách cảnh báo **$1.00 USD** gửi thông báo về email cá nhân ngay khi phát sinh bất kỳ khoản phí nhỏ nào.
+3. **Không tạo Elastic IP (EIP) mồ côi:** Chỉ sử dụng Public IPv4 tự động gán đi kèm instance.
+4. **Không tạo dịch vụ trả phí cố định:** Không tạo NAT Gateway (~$35/tháng) hay Application Load Balancer (~$25/tháng).
+5. **Hủy tài nguyên khi hoàn thành môn học/đồ án:**
    - Vào AWS Console $\rightarrow$ **EC2** $\rightarrow$ **Instances** $\rightarrow$ Chọn instance $\rightarrow$ **Instance State** $\rightarrow$ **Terminate Instance** để hủy vĩnh viễn máy ảo và ổ cứng EBS đi kèm, đảm bảo chi phí 0 VNĐ trọn đời.
