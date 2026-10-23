@@ -67,7 +67,7 @@ services:
     container_name: brewlite_nginx
     restart: unless-stopped
     ports:
-      - "80:80"
+      - "8080:80"
     networks:
       - brewlite-network
     depends_on:
