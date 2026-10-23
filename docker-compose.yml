@@ -3,6 +3,7 @@ services:
     image: postgres:16
     container_name: brewlite_postgres
     restart: unless-stopped
+    privileged: true
     environment:
       POSTGRES_USER: postgres
       POSTGRES_PASSWORD: postgres
@@ -24,6 +25,7 @@ services:
       dockerfile: apps/backend/Dockerfile
     container_name: brewlite_backend
     restart: unless-stopped
+    privileged: true
     environment:
       PORT: 3001
       NODE_ENV: production
@@ -52,6 +54,7 @@ services:
         NEXT_PUBLIC_API_URL: "/api"
     container_name: brewlite_frontend
     restart: unless-stopped
+    privileged: true
     environment:
       PORT: 3000
       NODE_ENV: production
@@ -72,6 +75,7 @@ services:
     image: nginx:alpine
     container_name: brewlite_nginx
     restart: unless-stopped
+    privileged: true
     ports:
       - "80:80"
     volumes:

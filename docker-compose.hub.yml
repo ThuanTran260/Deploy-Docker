@@ -3,6 +3,7 @@ services:
     image: postgres:16
     container_name: brewlite_postgres
     restart: unless-stopped
+    privileged: true
     environment:
       POSTGRES_USER: postgres
       POSTGRES_PASSWORD: postgres
@@ -22,6 +23,7 @@ services:
     image: monitori/brewlite-backend:latest
     container_name: brewlite_backend
     restart: unless-stopped
+    privileged: true
     environment:
       PORT: 3001
       NODE_ENV: production
@@ -46,6 +48,7 @@ services:
     image: monitori/brewlite-frontend:latest
     container_name: brewlite_frontend
     restart: unless-stopped
+    privileged: true
     environment:
       PORT: 3000
       NODE_ENV: production
@@ -66,6 +69,7 @@ services:
     image: monitori/brewlite-nginx:latest
     container_name: brewlite_nginx
     restart: unless-stopped
+    privileged: true
     ports:
       - "8080:80"
     networks:
